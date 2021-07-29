@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-js
+  labels:
+    app: node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - name: node
+        image: myimage
+        env:
+        - name: NAME 
+          valueFrom:
+            configMapKeyRef:
+              name: node    
+              key: name
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
